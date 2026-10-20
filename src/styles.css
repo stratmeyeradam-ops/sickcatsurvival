@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces", "Liberation Serif", Georgia, serif;
+  --font-sans: "Figtree", "Liberation Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --color-paper: #f4efe6;
+  --color-ink: #1a1814;
+  --color-sage: #2a5348;
+  --color-sage-fg: #f4efe6;
+  --color-alert: #9b2c2c;
+  --color-alert-fg: #fbf8f2;
+  --color-muted: #6f685e;
+  --color-line: #ddd4c6;
+  --color-surface: #fbf8f2;
+  --color-surface-2: #efe8dc;
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  --shadow-border:
+    0px 0px 0px 1px rgba(26, 24, 20, 0.06),
+    0px 1px 2px -1px rgba(26, 24, 20, 0.06),
+    0px 2px 8px 0px rgba(26, 24, 20, 0.04);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.55;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 560;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    text-wrap: balance;
+    color: var(--color-ink);
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  img {
+    outline: 1px solid rgba(26, 24, 20, 0.1);
+    outline-offset: -1px;
+  }
+
+  a {
+    color: inherit;
+  }
+}
+
+@layer components {
+  .paper-grain {
+    background-color: var(--color-paper);
+    background-image:
+      radial-gradient(rgba(26, 24, 20, 0.03) 0.6px, transparent 0.6px),
+      linear-gradient(180deg, rgba(42, 83, 72, 0.04), transparent 28%);
+    background-size:
+      3px 3px,
+      100% 100%;
+  }
+
+  .shadow-plate {
+    box-shadow: var(--shadow-border);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  header,footer,.no-print,body > div > div > aside { display:none!important; }
+  body,main,.print-packet { background:white!important;color:black!important;box-shadow:none!important; }
+  .print-packet { border:1px solid #aaa;break-inside:avoid; }
+  input,textarea { border:1px solid #aaa!important;box-shadow:none!important; }
+}
+
+.print-only { display:none; }
+@media print { .print-only { display:block!important; } }
