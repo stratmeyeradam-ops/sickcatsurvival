@@ -7,5 +7,5 @@ export default defineConfig(({command,isPreview})=>({
  server:{host:'0.0.0.0',port:8080},
  preview:{host:'127.0.0.1',port:8081},
  resolve:{tsconfigPaths:true},
- plugins:[tailwindcss(),tanstackStart(),...(command==='build'||isPreview?[nitro({preset:'node-server'})]:[]),react()]
+ plugins:[tailwindcss(),tanstackStart(),...(command==='build'||isPreview?[nitro({preset:process.env.VERCEL?'vercel':'node-server'})]:[]),react()]
 }));

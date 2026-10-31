@@ -10,7 +10,7 @@ function ShopIndex() {
       <PageHero
         kicker="The shop"
         title="Goods for the go-bag"
-        lede="Everyday supplies and pieces for cat people. Secure checkout through Stripe."
+        lede="Prices are listed. Physical goods are not shipping until a print shop is connected. Memberships are separate and stay on the pricing page."
         image="/products/tote.jpg"
         imageAlt="Natural canvas tote on paper"
       />

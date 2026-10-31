@@ -11,9 +11,13 @@ export function CheckoutButton({kind,signedIn}:{kind:Kind;signedIn:boolean}){
  const [busy,setBusy]=useState(false),[error,setError]=useState<string|null>(null);
  const search=useRouterState({select:s=>s.location.searchStr});const resumed=useRef(false);
  async function buy(){
-  if(!signedIn){const next=kind.type==='sub'?`/pricing?plan=${kind.tierId}`:`/shop/${kind.slug}?buy=1`;window.location.href='/login?next='+encodeURIComponent(next);return;}
   setBusy(true);setError(null);
-  try{const res=await startCheckout({data:kind.type==='sub'?kind:{type:'merch',slug:kind.slug,quantity:1}});window.location.href=res.url;}catch(e){setError(e instanceof Error?e.message:'Checkout could not open. Please try again.');setBusy(false);}
+  if(kind.type==='sub'){
+    window.location.href = `/api/checkout?tier=${kind.tierId}`;
+    return;
+  }
+  if(!signedIn){const next=`/shop/${kind.slug}?buy=1`;window.location.href='/login?next='+encodeURIComponent(next);return;}
+  try{const res=await startCheckout({data:{type:'merch',slug:kind.slug,quantity:1}});window.location.href=res.url;}catch(e){setError(e instanceof Error?e.message:'Checkout could not open. Please try again.');setBusy(false);}
  }
  useEffect(()=>{const q=new URLSearchParams(search);const resume=kind.type==='sub'?q.get('plan')===String(kind.tierId):q.get('buy')==='1';if(signedIn&&resume&&!resumed.current){resumed.current=true;window.history.replaceState(null,'',window.location.pathname);void buy();}},[signedIn,search]);
  return <div><Button size="lg" className="w-full" disabled={busy} onClick={()=>void buy()}>{busy?'Opening checkout…':kind.type==='sub'?`Subscribe — ${formatPrice(TIERS.find(t=>t.id===kind.tierId)!.priceCents)}/month`:`Buy — ${formatPrice(kind.priceCents)}`}</Button>{error?<p className="mt-3 text-sm text-alert" role="alert">{error}</p>:null}</div>;

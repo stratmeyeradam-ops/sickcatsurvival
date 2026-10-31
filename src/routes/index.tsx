@@ -177,7 +177,7 @@ function Home() {
 
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <div className="flex items-end justify-between">
-          <h2 className="font-display text-3xl">Printify shop</h2>
+          <h2 className="font-display text-3xl">Shop</h2>
           <Link to="/shop" className="text-sm text-sage">
             All goods
           </Link>

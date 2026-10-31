@@ -39,7 +39,7 @@ function ProductPage() {
           />
         </div>
         <p className="mt-4 text-xs text-muted">
-          Secure Stripe checkout. Enter your delivery address at checkout; orders are made on demand.
+          Physical goods are not shipping yet. Checkout stays closed until a print shop is connected. Memberships do not wait on that.
         </p>
         <p className="mt-6 text-xs text-muted">{DISCLAIMER}</p>
         <div className="mt-10">

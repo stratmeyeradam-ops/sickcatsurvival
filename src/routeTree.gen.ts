@@ -18,6 +18,7 @@ import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ToolkitRouteImport } from './routes/toolkit'
 import { Route as WellnessRouteImport } from './routes/wellness'
+import { Route as ApiCheckoutRouteImport } from './routes/api/checkout'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
 import { Route as CheckoutSuccessRouteImport } from './routes/checkout/success'
 import { Route as CommunityIndexRouteImport } from './routes/community.index'
@@ -76,6 +77,11 @@ const ToolkitRoute = ToolkitRouteImport.update({
 const WellnessRoute = WellnessRouteImport.update({
   id: '/wellness',
   path: '/wellness',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCheckoutRoute = ApiCheckoutRouteImport.update({
+  id: '/api/checkout',
+  path: '/api/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiHealthRoute = ApiHealthRouteImport.update({
@@ -159,6 +165,7 @@ export interface FileRoutesByFullPath {
   '/resources': typeof ResourcesRoute
   '/toolkit': typeof ToolkitRoute
   '/wellness': typeof WellnessRoute
+  '/api/checkout': typeof ApiCheckoutRoute
   '/api/health': typeof ApiHealthRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/community/$id': typeof CommunityIdRoute
@@ -184,6 +191,7 @@ export interface FileRoutesByTo {
   '/resources': typeof ResourcesRoute
   '/toolkit': typeof ToolkitRoute
   '/wellness': typeof WellnessRoute
+  '/api/checkout': typeof ApiCheckoutRoute
   '/api/health': typeof ApiHealthRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/community/$id': typeof CommunityIdRoute
@@ -210,6 +218,7 @@ export interface FileRoutesById {
   '/resources': typeof ResourcesRoute
   '/toolkit': typeof ToolkitRoute
   '/wellness': typeof WellnessRoute
+  '/api/checkout': typeof ApiCheckoutRoute
   '/api/health': typeof ApiHealthRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/community/$id': typeof CommunityIdRoute
@@ -237,6 +246,7 @@ export interface FileRouteTypes {
     | '/resources'
     | '/toolkit'
     | '/wellness'
+    | '/api/checkout'
     | '/api/health'
     | '/checkout/success'
     | '/community/$id'
@@ -262,6 +272,7 @@ export interface FileRouteTypes {
     | '/resources'
     | '/toolkit'
     | '/wellness'
+    | '/api/checkout'
     | '/api/health'
     | '/checkout/success'
     | '/community/$id'
@@ -287,6 +298,7 @@ export interface FileRouteTypes {
     | '/resources'
     | '/toolkit'
     | '/wellness'
+    | '/api/checkout'
     | '/api/health'
     | '/checkout/success'
     | '/community/$id'
@@ -313,6 +325,7 @@ export interface RootRouteChildren {
   ResourcesRoute: typeof ResourcesRoute
   ToolkitRoute: typeof ToolkitRoute
   WellnessRoute: typeof WellnessRoute
+  ApiCheckoutRoute: typeof ApiCheckoutRoute
   ApiHealthRoute: typeof ApiHealthRoute
   CheckoutSuccessRoute: typeof CheckoutSuccessRoute
   CommunityIdRoute: typeof CommunityIdRoute
@@ -392,6 +405,13 @@ declare module '@tanstack/react-router' {
       path: '/wellness'
       fullPath: '/wellness'
       preLoaderRoute: typeof WellnessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/checkout': {
+      id: '/api/checkout'
+      path: '/api/checkout'
+      fullPath: '/api/checkout'
+      preLoaderRoute: typeof ApiCheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/health': {
@@ -505,6 +525,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResourcesRoute: ResourcesRoute,
   ToolkitRoute: ToolkitRoute,
   WellnessRoute: WellnessRoute,
+  ApiCheckoutRoute: ApiCheckoutRoute,
   ApiHealthRoute: ApiHealthRoute,
   CheckoutSuccessRoute: CheckoutSuccessRoute,
   CommunityIdRoute: CommunityIdRoute,

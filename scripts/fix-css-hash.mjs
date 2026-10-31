@@ -14,8 +14,17 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const assetsDir = join(root, ".output", "public", "assets");
-const ssrDir = join(root, ".output", "server", "_ssr");
+const vercelAssets = join(root, ".vercel", "output", "static", "assets");
+const vercelSsr = join(root, ".vercel", "output", "functions", "__server.func", "_ssr");
+let assetsDir = join(root, ".output", "public", "assets");
+let ssrDir = join(root, ".output", "server", "_ssr");
+try {
+  await readdir(vercelAssets);
+  assetsDir = vercelAssets;
+  ssrDir = vercelSsr;
+} catch {
+  // node-server preset keeps CSS under .output
+}
 
 const actual = (await readdir(assetsDir)).filter((f) => /^styles-[\w-]+\.css$/.test(f));
 if (actual.length !== 1) {

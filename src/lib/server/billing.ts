@@ -25,6 +25,10 @@ export const manageSubscription=createServerFn({method:'POST'}).middleware([auth
 export const confirmCheckout=createServerFn({method:'POST'}).middleware([authMiddleware])
  .validator((d:unknown)=>z.object({sessionId:z.string().min(1)}).parse(d)).handler(async({context,data})=>{
   const {billingService}=await import("./billing-runtime.server");const {stripe,service}=await billingService();const session=await stripe.checkout.sessions.retrieve(data.sessionId);
-  if(session.metadata?.userId!==context.userId)throw Error('This purchase belongs to another account.');
+  const sessEmail=(session.customer_details?.email||session.customer_email||'').toLowerCase().trim();
+  const myEmail=(context.email||'').toLowerCase().trim();
+  const ownerId=session.metadata?.userId||session.client_reference_id||(myEmail&&sessEmail===myEmail?context.userId:undefined);
+  if(ownerId&&ownerId!==context.userId)throw Error('This purchase belongs to another account.');
+  if(!session.metadata?.userId)session.metadata={...session.metadata,userId:context.userId};
   return service.complete(session);
  });
